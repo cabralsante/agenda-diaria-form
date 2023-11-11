@@ -23,9 +23,15 @@ export const Input = styled.input`
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 0 0 2px transparent;
+    margin: 30px 0;
 
     &:hover {
       background-color: #b300b3;
+    }
+
+    &:disabled {
+      background-color: #e0e0e0;
+      cursor: not-allowed;
     }
   ` || `
     width: 100%;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { HeaderContainer, HeaderText } from "../components/Header";
 import { FormContainer } from "../components/Form";
 import { Input, InputWrap, Label } from "../components/Input";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   width: 100%;
@@ -10,6 +11,95 @@ const Container = styled.div`
 `;
 
 function Home() {
+
+  const [allData, setAllData] = useState({
+    date: "",
+    morningScheduled: "",
+    morningAttended: "",
+    afternoonScheduled: "",
+    afternoonAttended: "",
+    saleQuantity: "",
+    saleValue: "",
+    dayScheduling: "",
+    monthScheduling: "",
+    dayAttendance: "",
+    monthAttendance: "",
+    returnVanessa: "",
+    followUp: "",
+    firstTimeDila: "",
+    total: "",
+    returnVanessaAccumulated: "",
+    followUpAccumulated: "",
+    firstTimeDilaAccumulated: "",
+    totalAccumulated: "",
+    cashAccumulated: "",
+  });
+
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    if(allData.date, allData.morningScheduled, allData.morningAttended, allData.afternoonScheduled, allData.afternoonAttended, allData.saleQuantity, allData.saleValue, allData.dayScheduling, allData.monthScheduling, allData.dayAttendance, allData.monthAttendance, allData.returnVanessa, allData.followUp, allData.firstTimeDila, allData.total, allData.returnVanessaAccumulated, allData.followUpAccumulated, allData.firstTimeDilaAccumulated, allData.totalAccumulated, allData.cashAccumulated) {
+      setIsDisabled(false);
+    }
+  }, [allData]);
+
+  useEffect(() => {
+    setAllData({
+      ...allData,
+      date: new Date().toISOString().split("T")[0],
+    });
+  }, []);
+
+  const handleSubmit = (e) => {
+    if(!allData.date, !allData.morningScheduled, !allData.morningAttended, !allData.afternoonScheduled, !allData.afternoonAttended, !allData.saleQuantity, !allData.saleValue, !allData.dayScheduling, !allData.monthScheduling, !allData.dayAttendance, !allData.monthAttendance, !allData.returnVanessa, !allData.followUp, !allData.firstTimeDila, !allData.total, !allData.returnVanessaAccumulated, !allData.followUpAccumulated, !allData.firstTimeDilaAccumulated, !allData.totalAccumulated, !allData.cashAccumulated) {
+      window.alert("Preencha todos os campos!");
+      return;
+    }
+
+    e.preventDefault();
+
+    const values = [
+      [
+      allData.date,
+      allData.morningScheduled,
+      allData.morningAttended,
+      allData.afternoonScheduled,
+      allData.afternoonAttended,
+      allData.saleQuantity,
+      allData.saleValue,
+      allData.dayScheduling,
+      allData.monthScheduling,
+      allData.dayAttendance,
+      allData.monthAttendance,
+      allData.returnVanessa,
+      allData.followUp,
+      allData.firstTimeDila,
+      allData.total,
+      allData.returnVanessaAccumulated,
+      allData.followUpAccumulated,
+      allData.firstTimeDilaAccumulated,
+      allData.totalAccumulated,
+      allData.cashAccumulated,
+      ]
+    ];
+
+    async () => {
+      await fetch("https://spreadsheetapi.institutodentalsante.com.br/spreadsheet/addRow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then((response) => {
+        console.log(response);
+        window.alert("Dados enviados com sucesso!");
+
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }
+
   return (
     <Container>
       <HeaderContainer>
@@ -17,32 +107,248 @@ function Home() {
       </HeaderContainer>
       <FormContainer>
         <InputWrap mode="w-100">
-          <Input type="date" required/>
+          <Input type="date" required defaultValue={new Date().toISOString().split("T")[0]}/>
           <Label>Data</Label>
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required/>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                morningScheduled: e.target.value,
+              })
+            }
+          }/>
           <Label>Agendados - Manhã</Label>
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required/>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                morningAttended: e.target.value,
+              })
+            }
+          }/>
           <Label>Compareceram - Manhã</Label>
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required/>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                afternoonScheduled: e.target.value,
+              })
+            }
+          }/>
           <Label>Agendados - Tarde</Label>
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required/>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                afternoonAttended: e.target.value,
+              })
+            }
+          }/>
           <Label>Compareceram - Tarde</Label>
         </InputWrap>
 
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                saleQuantity: e.target.value,
+              })
+            }
+          }/>
+          <Label>Venda - Quantidade</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                saleValue: e.target.value,
+              })
+            }
+          }/>
+          <Label>Venda - Valor</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                dayScheduling: e.target.value,
+              })
+            }
+          }/>
+          <Label>Agendamentos  - Dia</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                monthScheduling: e.target.value,
+              })
+            }
+          }/>
+          <Label>Agendamentos  - Mês</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                dayAttendance: e.target.value,
+              })
+            }
+          }/>
+          <Label>Comparecimento - Dia</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                monthAttendance: e.target.value,
+              })
+            }
+          }/>
+          <Label>Comparecimento - Mês</Label>
+        </InputWrap>
+
         <InputWrap mode="w-100">
-          <Input type="submit" value="Enviar"/>
+          <hr />
+          <HeaderText style={{
+            "textAlign": "center",
+            "width": "100%",
+            "margin": "30px 0",
+          }}>Faturamento do Dia</HeaderText>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                returnVanessa: e.target.value,
+              })
+            }
+          }/>
+          <Label>Retorno (Vanessa)</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                followUp: e.target.value,
+              })
+            }
+          }/>
+          <Label>Follow-up</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                firstTimeDila: e.target.value,
+              })
+            }
+          }/>
+          <Label>Primeira vez (Dila)</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                total: e.target.value,
+              })
+            }
+          }/>
+          <Label>Total</Label>
+        </InputWrap>
+
+        <InputWrap mode="w-100">
+          <hr />
+          <HeaderText style={{
+            "textAlign": "center",
+            "width": "100%",
+            "margin": "30px 0",
+          }}>Faturamento Acumulado</HeaderText>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                returnVanessaAccumulated: e.target.value,
+              })
+            }
+          }/>
+          <Label>Retorno (Vanessa)</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                followUpAccumulated: e.target.value,
+              })
+            }
+          }/>
+          <Label>Follow-up</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                firstTimeDilaAccumulated: e.target.value,
+              })
+            }
+          }/>
+          <Label>Primeira vez (Dila)</Label>
+        </InputWrap>
+
+        <InputWrap>
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                totalAccumulated: e.target.value,
+              })
+            }
+          }/>
+          <Label>Total</Label>
+        </InputWrap>
+
+        <InputWrap mode="w-100">
+          <hr />
+          <HeaderText style={{
+            "textAlign": "center",
+            "width": "100%",
+            "margin": "30px 0",
+          }}>Caixa Acumulado</HeaderText>
+        </InputWrap>
+
+        <InputWrap mode="w-100">
+          <Input type="number" required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                cashAccumulated: e.target.value,
+              })
+            }
+          }/>
+          <Label>Valor</Label>
+        </InputWrap>
+
+        <InputWrap mode="w-100">
+          <Input type="submit" value="Enviar" onClick={handleSubmit} disabled={isDisabled}/>
         </InputWrap>
 
       </FormContainer>
