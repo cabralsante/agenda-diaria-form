@@ -3,6 +3,7 @@ import { HeaderContainer, HeaderText } from "../components/Header";
 import { FormContainer } from "../components/Form";
 import { Input, InputWrap, Label } from "../components/Input";
 import { useEffect, useState } from "react";
+import LoaderCSS from "../components/Loader";
 
 const Container = styled.div`
   width: 100%;
@@ -13,7 +14,6 @@ const Container = styled.div`
 function Home() {
 
   const [allData, setAllData] = useState({
-    date: "",
     morningScheduled: "",
     morningAttended: "",
     afternoonScheduled: "",
@@ -37,21 +37,63 @@ function Home() {
 
   const [isDisabled, setIsDisabled] = useState(true);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    if(allData.date, allData.morningScheduled, allData.morningAttended, allData.afternoonScheduled, allData.afternoonAttended, allData.saleQuantity, allData.saleValue, allData.dayScheduling, allData.monthScheduling, allData.dayAttendance, allData.monthAttendance, allData.returnVanessa, allData.followUp, allData.firstTimeDila, allData.total, allData.returnVanessaAccumulated, allData.followUpAccumulated, allData.firstTimeDilaAccumulated, allData.totalAccumulated, allData.cashAccumulated) {
+    if(allData.morningScheduled, allData.morningAttended, allData.afternoonScheduled, allData.afternoonAttended, allData.saleQuantity, allData.saleValue, allData.dayScheduling, allData.monthScheduling, allData.dayAttendance, allData.monthAttendance, allData.returnVanessa, allData.followUp, allData.firstTimeDila, allData.total, allData.returnVanessaAccumulated, allData.followUpAccumulated, allData.firstTimeDilaAccumulated, allData.totalAccumulated, allData.cashAccumulated) {
       setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
     }
   }, [allData]);
 
-  useEffect(() => {
-    setAllData({
-      ...allData,
-      date: new Date().toISOString().split("T")[0],
+  const sendValues = async ( values ) => {
+    await fetch("https://spreadsheetapi.institutodentalsante.com.br/spreadsheet/addRow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "values": values,
+      }),
+    }).then((response) => {
+        setAllData({
+          morningScheduled: "",
+          morningAttended: "",
+          afternoonScheduled: "",
+          afternoonAttended: "",
+          saleQuantity: "",
+          saleValue: "",
+          dayScheduling: "",
+          monthScheduling: "",
+          dayAttendance: "",
+          monthAttendance: "",
+          returnVanessa: "",
+          followUp: "",
+          firstTimeDila: "",
+          total: "",
+          returnVanessaAccumulated: "",
+          followUpAccumulated: "",
+          firstTimeDilaAccumulated: "",
+          totalAccumulated: "",
+          cashAccumulated: "",
+        });
+        
+        window.alert("Dados enviados com sucesso!");
+        console.log(response);
+        setIsLoading(false);
+
+      }).catch((error) => {
+        window.alert("Erro ao enviar dados!");
+        console.log(error);
+        setIsLoading(false);
+
     });
-  }, []);
+  }
+
 
   const handleSubmit = (e) => {
-    if(!allData.date, !allData.morningScheduled, !allData.morningAttended, !allData.afternoonScheduled, !allData.afternoonAttended, !allData.saleQuantity, !allData.saleValue, !allData.dayScheduling, !allData.monthScheduling, !allData.dayAttendance, !allData.monthAttendance, !allData.returnVanessa, !allData.followUp, !allData.firstTimeDila, !allData.total, !allData.returnVanessaAccumulated, !allData.followUpAccumulated, !allData.firstTimeDilaAccumulated, !allData.totalAccumulated, !allData.cashAccumulated) {
+    if(!allData.morningScheduled, !allData.morningAttended, !allData.afternoonScheduled, !allData.afternoonAttended, !allData.saleQuantity, !allData.saleValue, !allData.dayScheduling, !allData.monthScheduling, !allData.dayAttendance, !allData.monthAttendance, !allData.returnVanessa, !allData.followUp, !allData.firstTimeDila, !allData.total, !allData.returnVanessaAccumulated, !allData.followUpAccumulated, !allData.firstTimeDilaAccumulated, !allData.totalAccumulated, !allData.cashAccumulated) {
       window.alert("Preencha todos os campos!");
       return;
     }
@@ -60,7 +102,7 @@ function Home() {
 
     const values = [
       [
-      allData.date,
+      new Date().toISOString().split("T")[0],
       allData.morningScheduled,
       allData.morningAttended,
       allData.afternoonScheduled,
@@ -83,39 +125,39 @@ function Home() {
       ]
     ];
 
-    async () => {
-      await fetch("https://spreadsheetapi.institutodentalsante.com.br/spreadsheet/addRow", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }).then((response) => {
-        console.log(response);
-        window.alert("Dados enviados com sucesso!");
-
-      }).catch((error) => {
-        console.log(error);
+    const parsedValues = values.map((value) => {
+      return value.map((item, index) => {
+        if(index === 0) {
+          return item;
+        } else {
+          return Number(item);
+        }
       });
-    }
-  }
+    });
+
+    setIsLoading(true);
+    sendValues(parsedValues);
+  };
 
   return (
     <Container>
+      {isLoading && (
+        <LoaderCSS />
+      )}
       <HeaderContainer>
         <HeaderText>Dados Diários - Dental Santé</HeaderText>
       </HeaderContainer>
       <FormContainer>
         <InputWrap mode="w-100">
-          <Input type="date" required defaultValue={new Date().toISOString().split("T")[0]}/>
+          <Input type="date" required defaultValue={new Date().toISOString().split("T")[0]} />
           <Label>Data</Label>
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.morningScheduled} required onChange={ (e) => {
               setAllData({
                 ...allData,
-                morningScheduled: e.target.value,
+                morningScheduled: e.target.value, 
               })
             }
           }/>
@@ -123,7 +165,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.morningAttended} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 morningAttended: e.target.value,
@@ -134,7 +176,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.afternoonScheduled} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 afternoonScheduled: e.target.value,
@@ -145,7 +187,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.afternoonAttended} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 afternoonAttended: e.target.value,
@@ -156,7 +198,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.saleQuantity} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 saleQuantity: e.target.value,
@@ -167,7 +209,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.saleValue} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 saleValue: e.target.value,
@@ -178,7 +220,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.dayScheduling} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 dayScheduling: e.target.value,
@@ -189,7 +231,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.monthScheduling} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 monthScheduling: e.target.value,
@@ -200,7 +242,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.dayAttendance} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 dayAttendance: e.target.value,
@@ -211,7 +253,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.monthAttendance} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 monthAttendance: e.target.value,
@@ -231,7 +273,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.returnVanessa} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 returnVanessa: e.target.value,
@@ -242,7 +284,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.followUp} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 followUp: e.target.value,
@@ -253,7 +295,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.firstTimeDila} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 firstTimeDila: e.target.value,
@@ -264,7 +306,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.total} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 total: e.target.value,
@@ -284,7 +326,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.returnVanessaAccumulated} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 returnVanessaAccumulated: e.target.value,
@@ -295,7 +337,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.followUpAccumulated} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 followUpAccumulated: e.target.value,
@@ -306,7 +348,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.firstTimeDilaAccumulated} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 firstTimeDilaAccumulated: e.target.value,
@@ -317,7 +359,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.totalAccumulated} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 totalAccumulated: e.target.value,
@@ -337,7 +379,7 @@ function Home() {
         </InputWrap>
 
         <InputWrap mode="w-100">
-          <Input type="number" required onChange={ (e) => {
+          <Input type="number" value={allData.cashAccumulated} required onChange={ (e) => {
               setAllData({
                 ...allData,
                 cashAccumulated: e.target.value,
