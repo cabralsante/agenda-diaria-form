@@ -16,9 +16,9 @@ function Home() {
 
   const [allData, setAllData] = useState({
     morningScheduled: "",
-    morningAttended: "",
+    morningMissed: "",
     afternoonScheduled: "",
-    afternoonAttended: "",
+    afternoonMissed: "",
     saleQuantity: "",
     saleValue: "",
     dayScheduling: "",
@@ -41,7 +41,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if(allData.morningAttended && allData.morningScheduled && allData.afternoonAttended && allData.afternoonScheduled && allData.saleQuantity && allData.saleValue && allData.dayScheduling && allData.monthScheduling && allData.dayAttendance && allData.monthAttendance && allData.returnVanessa && allData.followUp && allData.firstTimeDila && allData.total && allData.returnVanessaAccumulated && allData.followUpAccumulated && allData.firstTimeDilaAccumulated && allData.totalAccumulated && allData.cashAccumulated) {
+    if(allData.morningMissed && allData.morningScheduled && allData.afternoonMissed && allData.afternoonScheduled && allData.attended && allData.saleQuantity && allData.saleValue && allData.dayScheduling && allData.monthScheduling && allData.dayAttendance && allData.monthAttendance && allData.returnVanessa && allData.followUp && allData.firstTimeDila && allData.total && allData.returnVanessaAccumulated && allData.followUpAccumulated && allData.firstTimeDilaAccumulated && allData.totalAccumulated && allData.cashAccumulated) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -60,9 +60,10 @@ function Home() {
     }).then((response) => {
         setAllData({
           morningScheduled: "",
-          morningAttended: "",
+          morningMissed: "",
           afternoonScheduled: "",
-          afternoonAttended: "",
+          afternoonMissed: "",
+          attended: "",
           saleQuantity: "",
           saleValue: "",
           dayScheduling: "",
@@ -103,7 +104,7 @@ function Home() {
   }
 
   const handleSubmit = (e) => {
-    if(!allData.morningScheduled, !allData.morningAttended, !allData.afternoonScheduled, !allData.afternoonAttended, !allData.saleQuantity, !allData.saleValue, !allData.dayScheduling, !allData.monthScheduling, !allData.dayAttendance, !allData.monthAttendance, !allData.returnVanessa, !allData.followUp, !allData.firstTimeDila, !allData.total, !allData.returnVanessaAccumulated, !allData.followUpAccumulated, !allData.firstTimeDilaAccumulated, !allData.totalAccumulated, !allData.cashAccumulated) {
+    if(!allData.morningScheduled && !allData.morningMissed && !allData.afternoonScheduled && !allData.afternoonMissed && !allData.attended && !allData.saleQuantity && !allData.saleValue && !allData.dayScheduling && !allData.monthScheduling && !allData.dayAttendance && !allData.monthAttendance && !allData.returnVanessa && !allData.followUp && !allData.firstTimeDila && !allData.total && !allData.returnVanessaAccumulated && !allData.followUpAccumulated && !allData.firstTimeDilaAccumulated && !allData.totalAccumulated && !allData.cashAccumulated) {
       window.alert("Preencha todos os campos!");
       return;
     }
@@ -114,9 +115,10 @@ function Home() {
       [
       new Date().toISOString().split("T")[0],
       allData.morningScheduled,
-      allData.morningAttended,
+      allData.morningMissed,
       allData.afternoonScheduled,
-      allData.afternoonAttended,
+      allData.afternoonMissed,
+      allData.attended,
       allData.saleQuantity,
       allData.saleValue,
       allData.dayScheduling,
@@ -176,14 +178,14 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.morningAttended} required onChange={ (e) => {
+          <Input type="number" value={allData.morningMissed} required onChange={ (e) => {
               setAllData({
                 ...allData,
-                morningAttended: e.target.value,
+                morningMissed: e.target.value,
               })
             }
           }/>
-          <Label>Compareceram - Manhã</Label>
+          <Label>Faltaram - Manhã</Label>
         </InputWrap>
 
         <InputWrap>
@@ -198,14 +200,25 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.afternoonAttended} required onChange={ (e) => {
+          <Input type="number" value={allData.afternoonMissed} required onChange={ (e) => {
               setAllData({
                 ...allData,
-                afternoonAttended: e.target.value,
+                afternoonMissed: e.target.value,
               })
             }
           }/>
-          <Label>Compareceram - Tarde</Label>
+          <Label>Faltaram - Tarde</Label>
+        </InputWrap>
+
+        <InputWrap mode="w-100">
+          <Input type="number" value={allData.attended} required onChange={ (e) => {
+              setAllData({
+                ...allData,
+                attended: e.target.value,
+              })
+            }
+          }/>
+          <Label>Compareceram</Label>
         </InputWrap>
 
         <InputWrap>
