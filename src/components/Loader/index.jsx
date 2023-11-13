@@ -102,12 +102,12 @@ const Ripple = styled.div`
 `;
 
 const Ripple1 = styled(Ripple)`
-  border-color: #1b0629;
+  border-color: #2c2e78;
   animation-delay: 0s;
 `;
 
 const Ripple2 = styled(Ripple)`
-  border-color: #dc93f8;
+  border-color: #494BC1;
   animation-delay: -0.5s;
 `;
 
