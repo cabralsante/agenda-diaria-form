@@ -8,7 +8,7 @@ export const InputWrap = styled.div`
 export const Input = styled.input`
 
   ${({ type }) => type === "submit" && `
-    background-color: violet;
+    background-color: #494BC1;
     width: 100%;
     padding: 1rem;
     color: #fff !important;
@@ -26,7 +26,7 @@ export const Input = styled.input`
     margin: 30px 0;
 
     &:hover {
-      background-color: #b300b3;
+      background-color: #2c2e78;
     }
 
     &:disabled {
@@ -54,7 +54,7 @@ export const Input = styled.input`
 
     &:focus {
       background-color: #fff;
-      box-shadow: 0 0 0 2px violet;
+      box-shadow: 0 0 0 2px #494BC1;
     }
 
     &:focus ~ label, &:valid ~ label {
@@ -64,7 +64,7 @@ export const Input = styled.input`
     }
 
     &:focus ~ label {
-      color: violet;
+      color: #494BC1;
     }
 
     &:focus, &:valid {

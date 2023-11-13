@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { HeaderContainer, HeaderText } from "../components/Header";
+import { HeaderContainer, HeaderImage, HeaderText } from "../components/Header";
 import { FormContainer } from "../components/Form";
 import { Input, InputWrap, Label } from "../components/Input";
 import { useEffect, useState } from "react";
 import LoaderCSS from "../components/Loader";
+import LOGO from "../assets/DENTAL_SANTE_LOGO.png";
 
 const Container = styled.div`
   width: 100%;
@@ -40,7 +41,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if(allData.morningScheduled, allData.morningAttended, allData.afternoonScheduled, allData.afternoonAttended, allData.saleQuantity, allData.saleValue, allData.dayScheduling, allData.monthScheduling, allData.dayAttendance, allData.monthAttendance, allData.returnVanessa, allData.followUp, allData.firstTimeDila, allData.total, allData.returnVanessaAccumulated, allData.followUpAccumulated, allData.firstTimeDilaAccumulated, allData.totalAccumulated, allData.cashAccumulated) {
+    if(allData.morningAttended && allData.morningScheduled && allData.afternoonAttended && allData.afternoonScheduled && allData.saleQuantity && allData.saleValue && allData.dayScheduling && allData.monthScheduling && allData.dayAttendance && allData.monthAttendance && allData.returnVanessa && allData.followUp && allData.firstTimeDila && allData.total && allData.returnVanessaAccumulated && allData.followUpAccumulated && allData.firstTimeDilaAccumulated && allData.totalAccumulated && allData.cashAccumulated) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -145,6 +146,7 @@ function Home() {
         <LoaderCSS />
       )}
       <HeaderContainer>
+        <HeaderImage src={LOGO} />
         <HeaderText>Dados Diários - Dental Santé</HeaderText>
       </HeaderContainer>
       <FormContainer>
