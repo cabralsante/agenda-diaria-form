@@ -82,16 +82,25 @@ function Home() {
         
         window.alert("Dados enviados com sucesso!");
         console.log(response);
-        setIsLoading(false);
+        appearLoader(false);
 
       }).catch((error) => {
         window.alert("Erro ao enviar dados!");
         console.log(error);
-        setIsLoading(false);
+        appearLoader(false);
 
     });
   }
 
+  const appearLoader = ( boolean ) => {
+    if(boolean) {
+      setIsLoading(true);
+      window.document.body.style.overflow = "hidden";
+    } else {
+      setIsLoading(false);
+      window.document.body.style.overflow = "auto";
+    }
+  }
 
   const handleSubmit = (e) => {
     if(!allData.morningScheduled, !allData.morningAttended, !allData.afternoonScheduled, !allData.afternoonAttended, !allData.saleQuantity, !allData.saleValue, !allData.dayScheduling, !allData.monthScheduling, !allData.dayAttendance, !allData.monthAttendance, !allData.returnVanessa, !allData.followUp, !allData.firstTimeDila, !allData.total, !allData.returnVanessaAccumulated, !allData.followUpAccumulated, !allData.firstTimeDilaAccumulated, !allData.totalAccumulated, !allData.cashAccumulated) {
@@ -136,7 +145,7 @@ function Home() {
       });
     });
 
-    setIsLoading(true);
+    appearLoader(true);
     sendValues(parsedValues);
   };
 
