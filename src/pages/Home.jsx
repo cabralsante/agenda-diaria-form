@@ -142,7 +142,7 @@ function Home() {
         if(index === 0) {
           return item;
         } else {
-          return Number(item);
+          return Number(item.replace(/,/g, '.'));
         }
       });
     });
@@ -167,10 +167,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.morningScheduled} required onChange={ (e) => {
+          <Input type="text" value={allData.morningScheduled} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                morningScheduled: e.target.value, 
+                morningScheduled: value, 
               })
             }
           }/>
@@ -178,10 +181,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.morningMissed} required onChange={ (e) => {
+          <Input type="text" value={allData.morningMissed} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                morningMissed: e.target.value,
+                morningMissed: value,
               })
             }
           }/>
@@ -189,10 +195,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.afternoonScheduled} required onChange={ (e) => {
+          <Input type="text" value={allData.afternoonScheduled} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                afternoonScheduled: e.target.value,
+                afternoonScheduled: value,
               })
             }
           }/>
@@ -200,10 +209,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.afternoonMissed} required onChange={ (e) => {
+          <Input type="text" value={allData.afternoonMissed} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                afternoonMissed: e.target.value,
+                afternoonMissed: value,
               })
             }
           }/>
@@ -211,10 +223,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap mode="w-100">
-          <Input type="number" value={allData.attended} required onChange={ (e) => {
+          <Input type="text" value={allData.attended} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                attended: e.target.value,
+                attended: value,
               })
             }
           }/>
@@ -222,10 +237,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.saleQuantity} required onChange={ (e) => {
+          <Input type="text" value={allData.saleQuantity} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                saleQuantity: e.target.value,
+                saleQuantity: value,
               })
             }
           }/>
@@ -233,10 +251,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.saleValue} required onChange={ (e) => {
+          <Input type="text" value={allData.saleValue} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                saleValue: e.target.value,
+                saleValue: value,
               })
             }
           }/>
@@ -244,10 +265,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.dayScheduling} required onChange={ (e) => {
+          <Input type="text" value={allData.dayScheduling} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                dayScheduling: e.target.value,
+                dayScheduling: value,
               })
             }
           }/>
@@ -255,10 +279,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.monthScheduling} required onChange={ (e) => {
+          <Input type="text" value={allData.monthScheduling} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                monthScheduling: e.target.value,
+                monthScheduling: value,
               })
             }
           }/>
@@ -266,10 +293,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.dayAttendance} required onChange={ (e) => {
+          <Input type="text" value={allData.dayAttendance} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                dayAttendance: e.target.value,
+                dayAttendance: value,
               })
             }
           }/>
@@ -277,10 +307,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.monthAttendance} required onChange={ (e) => {
+          <Input type="text" value={allData.monthAttendance} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/\D/, '');
+
               setAllData({
                 ...allData,
-                monthAttendance: e.target.value,
+                monthAttendance: value,
               })
             }
           }/>
@@ -297,10 +330,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.returnVanessa} required onChange={ (e) => {
+          <Input type="text" value={allData.returnVanessa} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                returnVanessa: e.target.value,
+                returnVanessa: value,
               })
             }
           }/>
@@ -308,10 +344,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.followUp} required onChange={ (e) => {
+          <Input type="text" value={allData.followUp} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                followUp: e.target.value,
+                followUp: value,
               })
             }
           }/>
@@ -319,10 +358,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.firstTimeDila} required onChange={ (e) => {
+          <Input type="text" value={allData.firstTimeDila} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                firstTimeDila: e.target.value,
+                firstTimeDila: value,
               })
             }
           }/>
@@ -330,10 +372,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.total} required onChange={ (e) => {
+          <Input type="text" value={allData.total} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                total: e.target.value,
+                total: value,
               })
             }
           }/>
@@ -350,10 +395,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.returnVanessaAccumulated} required onChange={ (e) => {
+          <Input type="text" value={allData.returnVanessaAccumulated} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                returnVanessaAccumulated: e.target.value,
+                returnVanessaAccumulated: value,
               })
             }
           }/>
@@ -361,10 +409,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.followUpAccumulated} required onChange={ (e) => {
+          <Input type="text" value={allData.followUpAccumulated} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                followUpAccumulated: e.target.value,
+                followUpAccumulated: value,
               })
             }
           }/>
@@ -372,10 +423,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.firstTimeDilaAccumulated} required onChange={ (e) => {
+          <Input type="text" value={allData.firstTimeDilaAccumulated} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                firstTimeDilaAccumulated: e.target.value,
+                firstTimeDilaAccumulated: value,
               })
             }
           }/>
@@ -383,10 +437,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap>
-          <Input type="number" value={allData.totalAccumulated} required onChange={ (e) => {
+          <Input type="text" value={allData.totalAccumulated} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                totalAccumulated: e.target.value,
+                totalAccumulated: value,
               })
             }
           }/>
@@ -403,10 +460,13 @@ function Home() {
         </InputWrap>
 
         <InputWrap mode="w-100">
-          <Input type="number" value={allData.cashAccumulated} required onChange={ (e) => {
+          <Input type="text" value={allData.cashAccumulated} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
               setAllData({
                 ...allData,
-                cashAccumulated: e.target.value,
+                cashAccumulated: value,
               })
             }
           }/>

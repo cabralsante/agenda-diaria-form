@@ -70,6 +70,11 @@ export const Input = styled.input`
     &:focus, &:valid {
       color: #000;
     }
+
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   `};
 `;
 
