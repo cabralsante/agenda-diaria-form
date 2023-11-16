@@ -29,6 +29,7 @@ function Home() {
     followUp: "",
     firstTimeDila: "",
     total: "",
+    cashDaily: "",
     returnVanessaAccumulated: "",
     followUpAccumulated: "",
     firstTimeDilaAccumulated: "",
@@ -74,6 +75,7 @@ function Home() {
           followUp: "",
           firstTimeDila: "",
           total: "",
+          cashDaily: "",
           returnVanessaAccumulated: "",
           followUpAccumulated: "",
           firstTimeDilaAccumulated: "",
@@ -104,7 +106,7 @@ function Home() {
   }
 
   const handleSubmit = (e) => {
-    if(!allData.morningScheduled && !allData.morningMissed && !allData.afternoonScheduled && !allData.afternoonMissed && !allData.attended && !allData.saleQuantity && !allData.saleValue && !allData.dayScheduling && !allData.monthScheduling && !allData.dayAttendance && !allData.monthAttendance && !allData.returnVanessa && !allData.followUp && !allData.firstTimeDila && !allData.total && !allData.returnVanessaAccumulated && !allData.followUpAccumulated && !allData.firstTimeDilaAccumulated && !allData.totalAccumulated && !allData.cashAccumulated) {
+    if(!allData.morningScheduled && !allData.morningMissed && !allData.afternoonScheduled && !allData.afternoonMissed && !allData.attended && !allData.saleQuantity && !allData.saleValue && !allData.dayScheduling && !allData.monthScheduling && !allData.dayAttendance && !allData.monthAttendance && !allData.returnVanessa && !allData.followUp && !allData.firstTimeDila && !allData.total && !allData.cashDaily && !allData.returnVanessaAccumulated && !allData.followUpAccumulated && !allData.firstTimeDilaAccumulated && !allData.totalAccumulated && !allData.cashAccumulated) {
       window.alert("Preencha todos os campos!");
       return;
     }
@@ -129,6 +131,7 @@ function Home() {
       allData.followUp,
       allData.firstTimeDila,
       allData.total,
+      allData.cashDaily,
       allData.returnVanessaAccumulated,
       allData.followUpAccumulated,
       allData.firstTimeDilaAccumulated,
@@ -386,6 +389,20 @@ function Home() {
         </InputWrap>
 
         <InputWrap mode="w-100">
+          <Input type="text" value={allData.cashDaily} required onChange={ (e) => {
+
+              let value = e.target.value.replace(/[^0-9.,]/g, '');
+
+              setAllData({
+                ...allData,
+                cashDaily: value,
+              })
+            }
+          }/>
+          <Label>Caixa Diário</Label>
+        </InputWrap>
+
+        <InputWrap mode="w-100">
           <hr />
           <HeaderText style={{
             "textAlign": "center",
@@ -451,15 +468,6 @@ function Home() {
         </InputWrap>
 
         <InputWrap mode="w-100">
-          <hr />
-          <HeaderText style={{
-            "textAlign": "center",
-            "width": "100%",
-            "margin": "30px 0",
-          }}>Caixa Acumulado</HeaderText>
-        </InputWrap>
-
-        <InputWrap mode="w-100">
           <Input type="text" value={allData.cashAccumulated} required onChange={ (e) => {
 
               let value = e.target.value.replace(/[^0-9.,]/g, '');
@@ -470,7 +478,7 @@ function Home() {
               })
             }
           }/>
-          <Label>Valor</Label>
+          <Label>Caixa Acumulado</Label>
         </InputWrap>
 
         <InputWrap mode="w-100">
